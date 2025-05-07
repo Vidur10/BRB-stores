@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B.R.B Store - Grocery Delivery Info</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: #f7f7f7;
+        }
+        /* Intro Video */
+        #introVideoContainer {
+            position: fixed;
+            z-index: 9999;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #introVideo {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+        #skipBtn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255,255,255,0.8);
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* Main Content */
+        #mainContent {
+            display: none;
+        }
+        .banner {
+            width: 100%;
+            max-height: 320px;
+            object-fit: cover;
+            display: block;
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 30px 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2196f3;
+            margin-bottom: 10px;
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        .product-card {
+            width: 180px;
+            background: #fafafa;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+            padding: 18px 10px 14px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .product-card img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+        .product-card .name {
+            font-weight: bold;
+            text-align: center;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        .product-card .note {
+            font-size: 12px;
+            color: #f57c00;
+            text-align: center;
+        }
+        /* Floating Phone Button */
+        .call-btn {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #43a047;
+            color: #fff;
+            padding: 18px 28px;
+            border-radius: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 100;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+        .call-btn:hover {
+            background: #388e3c;
+        }
+        /* Floating UPI QR Button */
+        .upi-btn {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            background: #fff;
+            border: 2px solid #1976d2;
+            color: #1976d2;
+            padding: 12px 18px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            z-index: 100;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .upi-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+        }
+        .upi-modal-content {
+            background: #fff;
+            padding: 30px 24px;
+            border-radius: 14px;
+            text-align: center;
+            position: relative;
+        }
+        .upi-modal-content img {
+            width: 220px;
+            height: 220px;
+            margin-bottom: 10px;
+        }
+        .upi-modal-content .close {
+            position: absolute;
+            top: 10px; right: 14px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #888;
+            cursor: pointer;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 10px 2px; }
+            .product-card { width: 48vw; }
+            .call-btn, .upi-btn { font-size: 16px; padding: 12px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Intro Video -->
+    <div id="introVideoContainer">
+        <video id="introVideo" autoplay muted>
+            <source src="https://drive.google.com/uc?export=download&id=1tn3DKNEQ28vpeQ908UaFW0hgJBI0How4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <button id="skipBtn">Skip</button>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+        <!-- Banner -->
+        <img src="https://pplx-res.cloudinary.com/image/private/user_uploads/56827790/RKKQhhHXGtWLRiy/Banner.jpg" alt="B.R.B Store Banner" class="banner">
+
+        <div class="container">
+            <h1>B.R.B STORE</h1>
+            <p style="text-align:center; color:#555; margin-bottom:28px;">
+                Fast delivery of essentials via Porter and other apps.<br>
+                Call to place your order!
+            </p>
+            <div class="product-list">
+                <!-- Product Cards -->
+                <div class="product-card">
+                    <img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/potatoes-1238253_1280.jpg" alt="Potatoes">
+                    <div class="name">Potatoes</div>
+                </div>
+                <div class="product-card">
+                    <img src="https://cdn.pixabay.com/photo/2017/01/20/15/06/cucumber-1995016_1280.jpg" alt="Cucumbers">
+                    <div class="name">Cucumbers</div>
+                </div>
+                <div class="product-card">
+                    <img src="https://cdn.pixabay.com/photo/2016/02/19/11/19/tomatoes-1205699_1280.jpg" alt="Tomatoes">
+                    <div class="name">Tomatoes</div>
+                </div>
+                <div class="product-card">
+                    <img src="https://cdn.pixabay.com/photo/2017/01/20/15/06/carrots-1995020_1280.jpg" alt="Carrots">
+                    <div class="name">Carrots</div>
+                </div>
+                <div class="product-card">
+                    <img src="https://cdn.pixabay.com/photo/2014/12/21/23/54/potato-chips-579028_1280.png" alt="Potato Chips">
+                    <div class="name">Potato Chips</div>
+                    <div class="note">Call to check stock</div>
+                </div>
+                <div class="product-card">
+                    <img src="https://cdn.pixabay.com/photo/2016/11/29/09/32/broom-1868798_1280.jpg" alt="Broomsticks">
+                    <div class="name">Broomsticks</div>
+                </div>
+                <div class="product-card">
+                    <img src="https://cdn.pixabay.com/photo/2016/10/27/22/52/shampoo-1771678_1280.jpg" alt="Shampoo Sachets">
+                    <div class="name">Shampoo Sachets</div>
+                </div>
+                <div class="product-card">
+                    <img src="https://cdn.pixabay.com/photo/2017/07/16/10/43/coca-cola-2500166_1280.jpg" alt="Cool Drinks">
+                    <div class="name">Cool Drinks</div>
+                    <div class="note">Coca-Cola, Thumbs Up, Fanta, Sprite, 7up, Mountain Dew</div>
+                </div>
+                <div class="product-card">
+                    <img src="https://cdn.pixabay.com/photo/2017/07/16/10/43/cereal-2500167_1280.jpg" alt="Cereal">
+                    <div class="name">Cereal</div>
+                    <div class="note">Chocos, Soulful</div>
+                </div>
+                <div class="product-card">
+                    <img src="https://cdn.pixabay.com/photo/2017/05/07/08/56/milk-2298306_1280.jpg" alt="Dairy Products">
+                    <div class="name">Dairy Products</div>
+                    <div class="note">Milk, Curd, Buttermilk</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Call Button -->
+    <a href="tel:7019870716" class="call-btn" title="Call to Order">
+        📞 7019870716
+    </a>
+
+    <!-- Floating UPI QR Button -->
+    <div class="upi-btn" id="upiBtn" title="Show UPI QR">
+        <img src="https://img.icons8.com/ios-filled/24/1976d2/qr-code.png" alt="UPI QR" style="width:22px;height:22px;"> Pay via UPI
+    </div>
+
+    <!-- UPI Modal -->
+    <div class="upi-modal" id="upiModal">
+        <div class="upi-modal-content">
+            <span class="close" id="closeUpiModal">&times;</span>
+            <h2>Scan & Pay</h2>
+            <img src="https://pplx-res.cloudinary.com/image/private/user_uploads/56827790/MxtAdKXuCKnsFNz/QR.jpg" alt="UPI QR Code">
+            <p style="margin-top:10px; color:#1976d2; font-size:16px;">B.R.B Store<br>UPI: gpay-11230799096@okbizaxis</p>
+        </div>
+    </div>
+
+    <script>
+        // Video logic
+        const introVideoContainer = document.getElementById('introVideoContainer');
+        const introVideo = document.getElementById('introVideo');
+        const skipBtn = document.getElementById('skipBtn');
+        const mainContent = document.getElementById('mainContent');
+
+        function showMainContent() {
+            introVideoContainer.style.display = 'none';
+            mainContent.style.display = 'block';
+        }
+
+        introVideo.onended = showMainContent;
+        skipBtn.onclick = showMainContent;
+
+        // UPI Modal logic
+        const upiBtn = document.getElementById('upiBtn');
+        const upiModal = document.getElementById('upiModal');
+        const closeUpiModal = document.getElementById('closeUpiModal');
+
+        upiBtn.onclick = () => { upiModal.style.display = 'flex'; }
+        closeUpiModal.onclick = () => { upiModal.style.display = 'none'; }
+        upiModal.onclick = (e) => { if (e.target === upiModal) upiModal.style.display = 'none'; }
+    </script>
+</body>
+</html>
